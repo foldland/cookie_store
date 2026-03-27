@@ -1,0 +1,19 @@
+# https://github.com/rufman/license_checker
+
+permittedLicenses:
+  - Apache-2.0
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - MIT
+  - MIT-Modern-Variant
+  - Zlib
+
+rejectedLicenses:
+  - GPL
+  - AGPL-3.0
+
+approvedPackages:
+  no-file:
+    - flutter_test
+    - flutter_localizations
+    - flutter_web_plugins
