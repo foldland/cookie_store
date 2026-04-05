@@ -23,7 +23,7 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
         TestCookie('example.com', 'value')..domain = 'example.com',
         TestCookie('.example.com', 'value')..domain = '.example.com',
         TestCookie('test.example.com', 'value')..domain = 'test.example.com',
-        TestCookie('testexample.com', 'value')..domain = 'testexample.com',
+        TestCookie('test-example.com', 'value')..domain = 'test-example.com',
         TestCookie('test.com', 'value')..domain = 'test.com',
       ];
 
@@ -53,9 +53,9 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
       await cookieStore.saveFromResponse(Uri(host: '.example.com'), cookies);
 
       cookies = [
-        TestCookie('testexample.com', 'value')..domain = 'testexample.com',
+        TestCookie('test-example.com', 'value')..domain = 'test-example.com',
       ];
-      await cookieStore.saveFromResponse(Uri(host: 'testexample.com'), cookies);
+      await cookieStore.saveFromResponse(Uri(host: 'test-example.com'), cookies);
 
       cookies = [
         TestCookie('test.com', 'value')..domain = 'test.com',
@@ -69,9 +69,9 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
           '.example.com=value',
           'example.com=value',
           'null=value',
+          'test-example.com=value',
           'test.com=value',
           'test.example.com=value',
-          'testexample.com=value',
         ]),
       );
 
@@ -93,11 +93,11 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
         ]),
       );
 
-      stored = await cookieStore.loadForRequest(Uri(host: 'testexample.com'));
+      stored = await cookieStore.loadForRequest(Uri(host: 'test-example.com'));
       expect(
         toSortedStringList(stored),
         equals([
-          'testexample.com=value',
+          'test-example.com=value',
         ]),
       );
 
