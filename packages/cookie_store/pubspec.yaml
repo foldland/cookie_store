@@ -2,7 +2,7 @@ name: cookie_store
 description: A RFC compliant cookie store
 repository: https://github.com/foldland/cookie_store
 issue_tracker: https://github.com/foldland/cookie_store/issues
-version: 0.1.0
+version: 0.1.0+1
 publish_to: none
 topics:
   - http
@@ -24,5 +24,5 @@ dev_dependencies:
       url: https://github.com/foldland/cookie_store
       path: packages/cookie_store_conformance_tests
       tag_pattern: cookie_store_conformance_tests-v{{version}}
-    version: ^0.1.0
+    version: ^0.1.0+1
   test: ^1.25.15

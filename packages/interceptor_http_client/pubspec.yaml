@@ -2,7 +2,7 @@ name: interceptor_http_client
 description: A http client with request and response interceptors.
 repository: https://github.com/foldland/cookie_store
 issue_tracker: https://github.com/foldland/cookie_store/issues
-version: 0.1.0
+version: 0.1.0+1
 publish_to: none
 
 resolution: workspace
@@ -17,7 +17,7 @@ dependencies:
       url: https://github.com/foldland/cookie_store
       path: packages/cookie_store
       tag_pattern: cookie_store-v{{version}}
-    version: ^0.1.0
+    version: ^0.1.0+1
   http: ^1.0.0
   meta: ^1.0.0
 
