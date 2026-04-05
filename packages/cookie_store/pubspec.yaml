@@ -1,7 +1,14 @@
 name: cookie_store
 description: A RFC compliant cookie store
+repository: https://github.com/foldland/cookie_store
+issue_tracker: https://github.com/foldland/cookie_store/issues
 version: 0.1.0
 publish_to: none
+topics:
+  - http
+  - cookies
+  - rfc6265
+
 resolution: workspace
 
 environment:

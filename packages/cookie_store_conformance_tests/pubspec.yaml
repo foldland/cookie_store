@@ -2,7 +2,10 @@ name: cookie_store_conformance_tests
 description: >-
   A library that tests whether implementations of package:cookie_store's `CookieStore`
   class behave as expected.
+repository: https://github.com/foldland/cookie_store
+issue_tracker: https://github.com/foldland/cookie_store/issues
 publish_to: none
+
 resolution: workspace
 
 environment:
