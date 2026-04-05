@@ -13,7 +13,11 @@ environment:
 dependencies:
   built_collection: ^5.0.0
   cookie_store:
-    path: ../cookie_store
+    git:
+      url: https://github.com/foldland/cookie_store
+      path: packages/cookie_store
+      tag_pattern: cookie_store-v{{version}}
+    version: ^0.1.0
   http: ^1.0.0
   meta: ^1.0.0
 
