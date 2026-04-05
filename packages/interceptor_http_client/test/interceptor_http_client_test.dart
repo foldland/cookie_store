@@ -41,10 +41,7 @@ void main() {
       setUp(() {
         interceptor = _MockInterceptor();
 
-        client = InterceptorHttpClient(
-          baseClient: mockedClient,
-          interceptors: BuiltList([interceptor]),
-        );
+        client = InterceptorHttpClient(baseClient: mockedClient, interceptors: BuiltList([interceptor]));
       });
 
       test('does not intercept', () async {
@@ -54,11 +51,7 @@ void main() {
         final request = Request('GET', uri);
         await client.send(request);
 
-        verifyNever(
-          () => interceptor.interceptRequest(
-            request: any(named: 'request'),
-          ),
-        );
+        verifyNever(() => interceptor.interceptRequest(request: any(named: 'request')));
         verifyNever(
           () => interceptor.interceptResponse(
             response: any(named: 'response'),
@@ -70,11 +63,12 @@ void main() {
       test('does intercept', () async {
         when(() => interceptor.shouldInterceptRequest(any())).thenReturn(true);
         when(() => interceptor.shouldInterceptResponse(any())).thenReturn(true);
+        when(() => interceptor.interceptRequest(request: any(named: 'request'))).thenReturn(fakeRequest());
         when(
-          () => interceptor.interceptRequest(request: any(named: 'request')),
-        ).thenReturn(fakeRequest());
-        when(
-          () => interceptor.interceptResponse(response: any(named: 'response'), url: any(named: 'url')),
+          () => interceptor.interceptResponse(
+            response: any(named: 'response'),
+            url: any(named: 'url'),
+          ),
         ).thenReturn(fakeResponse());
 
         final request = Request('GET', uri);
@@ -95,38 +89,21 @@ void main() {
 
       test('rethrows errors as InterceptionFailure', () async {
         when(() => interceptor.shouldInterceptRequest(any())).thenReturn(true);
-        when(
-          () => interceptor.interceptRequest(request: any(named: 'request')),
-        ).thenThrow(StateError('message'));
+        when(() => interceptor.interceptRequest(request: any(named: 'request'))).thenThrow(StateError('message'));
 
-        expect(
-          client.get(uri),
-          throwsA(
-            isA<InterceptionException>().having(
-              (e) => e.uri,
-              'uri',
-              uri,
-            ),
-          ),
-        );
+        expect(client.get(uri), throwsA(isA<InterceptionException>().having((e) => e.uri, 'uri', uri)));
 
         when(() => interceptor.shouldInterceptRequest(any())).thenReturn(true);
         when(() => interceptor.interceptRequest(request: any(named: 'request'))).thenReturn(fakeRequest());
         when(() => interceptor.shouldInterceptResponse(any())).thenReturn(true);
         when(
-          () => interceptor.interceptResponse(response: any(named: 'response'), url: any(named: 'url')),
+          () => interceptor.interceptResponse(
+            response: any(named: 'response'),
+            url: any(named: 'url'),
+          ),
         ).thenThrow(StateError('message'));
 
-        expect(
-          client.get(uri),
-          throwsA(
-            isA<InterceptionException>().having(
-              (e) => e.uri,
-              'uri',
-              uri,
-            ),
-          ),
-        );
+        expect(client.get(uri), throwsA(isA<InterceptionException>().having((e) => e.uri, 'uri', uri)));
       });
     });
   });

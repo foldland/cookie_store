@@ -81,9 +81,7 @@ final tz.TZDateTime _maxDateTime = tz.TZDateTime.utc(275760, 09, 13);
 abstract interface class CookieStore {
   /// Creates a [DefaultCookieStore] instance.
   factory CookieStore() {
-    return DefaultCookieStore(
-      CookiePersistence(),
-    );
+    return DefaultCookieStore(CookiePersistence());
   }
 
   /// Save the [cookies] for specified [uri].
@@ -218,10 +216,7 @@ final class DefaultCookieStore implements CookieStore {
       persistentCookies.add(persistentCookie);
     }
 
-    return persistence.saveFromResponse(
-      persistentCookies,
-      isHttpRequest: isHttpRequest,
-    );
+    return persistence.saveFromResponse(persistentCookies, isHttpRequest: isHttpRequest);
   }
 
   @override
