@@ -1,7 +1,10 @@
 name: interceptor_http_client
 description: A http client with request and response interceptors.
+repository: https://github.com/foldland/cookie_store
+issue_tracker: https://github.com/foldland/cookie_store/issues
 version: 0.1.0
 publish_to: none
+
 resolution: workspace
 
 environment:
