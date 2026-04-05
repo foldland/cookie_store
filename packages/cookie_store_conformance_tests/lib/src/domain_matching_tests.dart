@@ -29,14 +29,7 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
 
       await cookieStore.saveFromResponse(Uri(host: 'test.example.com'), cookies);
       final stored = await cookieStore.loadAll();
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'example.com=value',
-          'null=value',
-          'test.example.com=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['example.com=value', 'null=value', 'test.example.com=value']));
     });
 
     test('do not load not matching domain', () async {
@@ -47,19 +40,13 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
       ];
       await cookieStore.saveFromResponse(Uri(host: 'test.example.com'), cookies);
 
-      cookies = [
-        TestCookie('.example.com', 'value')..domain = '.example.com',
-      ];
+      cookies = [TestCookie('.example.com', 'value')..domain = '.example.com'];
       await cookieStore.saveFromResponse(Uri(host: '.example.com'), cookies);
 
-      cookies = [
-        TestCookie('test-example.com', 'value')..domain = 'test-example.com',
-      ];
+      cookies = [TestCookie('test-example.com', 'value')..domain = 'test-example.com'];
       await cookieStore.saveFromResponse(Uri(host: 'test-example.com'), cookies);
 
-      cookies = [
-        TestCookie('test.com', 'value')..domain = 'test.com',
-      ];
+      cookies = [TestCookie('test.com', 'value')..domain = 'test.com'];
       await cookieStore.saveFromResponse(Uri(host: 'test.com'), cookies);
 
       var stored = await cookieStore.loadAll();
@@ -76,39 +63,16 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
       );
 
       stored = await cookieStore.loadForRequest(Uri(host: 'example.com'));
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'example.com=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['example.com=value']));
 
       stored = await cookieStore.loadForRequest(Uri(host: 'test.example.com'));
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'example.com=value',
-          'null=value',
-          'test.example.com=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['example.com=value', 'null=value', 'test.example.com=value']));
 
       stored = await cookieStore.loadForRequest(Uri(host: 'test-example.com'));
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'test-example.com=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['test-example.com=value']));
 
       stored = await cookieStore.loadForRequest(Uri(host: 'test..example.com'));
-      expect(
-        toSortedStringList(stored),
-        equals([
-          '.example.com=value',
-          'example.com=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['.example.com=value', 'example.com=value']));
     });
 
     group('ip address matching', () {
@@ -122,66 +86,36 @@ void domainMatching(FutureOr<CookieStore> Function() cookieStoreFactory) {
 
         await cookieStore.saveFromResponse(uri, cookies);
         final stored = await cookieStore.loadAll();
-        expect(
-          toSortedStringList(stored),
-          equals([]),
-        );
+        expect(toSortedStringList(stored), equals([]));
       });
 
       test('do not load from similar domain', () async {
-        var cookies = [
-          TestCookie('IPv4-address', 'value')..domain = '127.0.0.1',
-        ];
+        var cookies = [TestCookie('IPv4-address', 'value')..domain = '127.0.0.1'];
         await cookieStore.saveFromResponse(Uri(host: '127.0.0.1'), cookies);
 
-        cookies = [
-          TestCookie('IPv6-address', 'value')..domain = '::1',
-        ];
+        cookies = [TestCookie('IPv6-address', 'value')..domain = '::1'];
         await cookieStore.saveFromResponse(Uri(host: '::1'), cookies);
 
         var stored = await cookieStore.loadAll();
-        expect(
-          toSortedStringList(stored),
-          equals([
-            'IPv4-address=value',
-            'IPv6-address=value',
-          ]),
-        );
+        expect(toSortedStringList(stored), equals(['IPv4-address=value', 'IPv6-address=value']));
 
         final uri = Uri(host: '1');
         stored = await cookieStore.loadForRequest(uri);
-        expect(
-          toSortedStringList(stored),
-          equals([]),
-        );
+        expect(toSortedStringList(stored), equals([]));
       });
 
       test('load when identical', () async {
         var uri = Uri(host: '127.0.0.1');
-        var cookies = [
-          TestCookie('IPv4-address', 'value')..domain = '127.0.0.1',
-        ];
+        var cookies = [TestCookie('IPv4-address', 'value')..domain = '127.0.0.1'];
         await cookieStore.saveFromResponse(uri, cookies);
         var stored = await cookieStore.loadForRequest(uri);
-        expect(
-          toSortedStringList(stored),
-          equals([
-            'IPv4-address=value',
-          ]),
-        );
+        expect(toSortedStringList(stored), equals(['IPv4-address=value']));
 
         uri = Uri(host: '::1');
-        cookies = [
-          TestCookie('IPv6-address', 'value')..domain = '::1',
-        ];
+        cookies = [TestCookie('IPv6-address', 'value')..domain = '::1'];
         await cookieStore.saveFromResponse(uri, cookies);
         stored = await cookieStore.loadForRequest(uri);
-        expect(
-          toSortedStringList(stored),
-          equals([
-            'IPv6-address=value',
-          ]),
-        );
+        expect(toSortedStringList(stored), equals(['IPv6-address=value']));
       });
     });
   });

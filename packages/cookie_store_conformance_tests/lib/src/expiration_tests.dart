@@ -33,13 +33,7 @@ void expiration(FutureOr<CookieStore> Function() cookieStoreFactory) {
 
       await cookieStore.saveFromResponse(uri, cookies);
       final stored = await cookieStore.loadAll();
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'not-expired0=value',
-          'not-expired1=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['not-expired0=value', 'not-expired1=value']));
     });
 
     test('expiration at a later point', () async {
@@ -58,23 +52,12 @@ void expiration(FutureOr<CookieStore> Function() cookieStoreFactory) {
       var stored = await cookieStore.loadForRequest(uri);
       expect(
         toSortedStringList(stored),
-        equals([
-          'not-expired0=value',
-          'not-expired1=value',
-          'will-expire0=value',
-          'will-expire1=value',
-        ]),
+        equals(['not-expired0=value', 'not-expired1=value', 'will-expire0=value', 'will-expire1=value']),
       );
 
       await Future<void>.delayed(duration * 2);
       stored = await cookieStore.loadForRequest(uri);
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'not-expired0=value',
-          'not-expired1=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['not-expired0=value', 'not-expired1=value']));
     });
 
     test('session cookies', () async {
@@ -93,23 +76,12 @@ void expiration(FutureOr<CookieStore> Function() cookieStoreFactory) {
       var stored = await cookieStore.loadForRequest(uri);
       expect(
         toSortedStringList(stored),
-        equals([
-          'session-cookie1=value',
-          'session-cookie2=value',
-          'will-expire0=value',
-          'will-expire1=value',
-        ]),
+        equals(['session-cookie1=value', 'session-cookie2=value', 'will-expire0=value', 'will-expire1=value']),
       );
 
       await cookieStore.endSession();
       stored = await cookieStore.loadForRequest(uri);
-      expect(
-        toSortedStringList(stored),
-        equals([
-          'will-expire0=value',
-          'will-expire1=value',
-        ]),
-      );
+      expect(toSortedStringList(stored), equals(['will-expire0=value', 'will-expire1=value']));
     });
   });
 }

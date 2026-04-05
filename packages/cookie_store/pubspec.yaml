@@ -12,7 +12,7 @@ topics:
 resolution: workspace
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.9.0
 
 dependencies:
   meta: ^1.0.0
