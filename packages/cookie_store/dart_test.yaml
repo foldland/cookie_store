@@ -1,6 +1,6 @@
 platforms:
   - vm
-  # - chrome TODO(nikolas.rimikis): fix chrome test driver https://gitlab.debacode.de/tools/cookie_store/-/work_items/1
+  # - chrome TODO(nikolas.rimikis): fix chrome test driver https://gitlab.fold.land/tools/cookie_store/-/work_items/1
 
 define_platforms:
   chromium:
