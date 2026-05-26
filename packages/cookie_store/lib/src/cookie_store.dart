@@ -1,5 +1,5 @@
 // Most variables are mutable. Typing them improves readability.
-// ignore_for_file:   prefer_final_locals, omit_local_variable_types
+// ignore_for_file: prefer_final_locals, omit_local_variable_types, omit_obvious_local_variable_types
 
 import 'dart:async';
 import 'dart:io' show Cookie;
