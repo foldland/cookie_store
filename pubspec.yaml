@@ -55,14 +55,15 @@ melos:
     test:transform_coverage:
       description: (Internal) transforms the coverage to be collected.
       exec:
-        command: dart pub global run coverde filter --input coverage/lcov.info --output MELOS_ROOT_PATH/coverage/filtered.lcov.info --base-directory MELOS_ROOT_PATH --filters '\.g\.dart,lib/src/generated'
+        command: dart pub global run coverde transform --input coverage/lcov.info --output "$MELOS_ROOT_PATH/coverage/filtered.lcov.info" --transformations skip-by-glob="**/*.g.dart" --transformations skip-by-glob="lib/src/generated/**"
         concurrency: 1
       packageFilters:
         fileExists: coverage/lcov.info
     test:collect_coverage:
       description: Merge all packages coverage trace files ignoring data related to generated files.
       run: >
-        dart pub global run coverde rm --no-dry-run MELOS_ROOT_PATH/coverage/filtered.lcov.info &&
+        dart pub global run coverde rm --no-dry-run "$MELOS_ROOT_PATH/coverage/filtered.lcov.info" &&
+        mkdir -p "$MELOS_ROOT_PATH/coverage" &&
         melos run test:transform_coverage --no-select &&
         dart pub global run cobertura convert -i coverage/filtered.lcov.info &&
         dart pub global run cobertura show -i coverage/filtered.lcov.info
