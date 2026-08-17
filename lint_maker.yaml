@@ -7,6 +7,14 @@ base:
         strict-casts: true
         strict-inference: true
         strict-raw-types: true
+      exclude:
+        - build/**
+        - android/**
+        - ios/**
+        - web/**
+        - windows/**
+        - macos/**
+        - linux/**
     linter:
       rules:
         # Prefer type inference.
@@ -32,3 +40,5 @@ base:
         unnecessary_final: false
         # we use 120 here
         lines_longer_than_80_chars: false
+        # deprecated
+        unnecessary_await_in_return: false
