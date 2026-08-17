@@ -70,7 +70,7 @@ melos:
     pana:
       description: Run the dart package analysis.
       exec:
-        command: dart pub global run pana --exit-code-threshold 10 --flutter-sdk MELOS_ROOT_PATH/.fvm/flutter_sdk
+        command: dart pub global run pana --exit-code-threshold 10 --flutter-sdk "$MELOS_ROOT_PATH/.fvm/flutter_sdk"
         concurrency: 1
         failFast: true
       packageFilters:

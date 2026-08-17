@@ -20,7 +20,7 @@ void main() {
   }
 
   final mockedClient = MockClient((request) async {
-    return Response.fromStream(fakeResponse());
+    return await Response.fromStream(fakeResponse());
   });
   late InterceptorHttpClient client;
 
